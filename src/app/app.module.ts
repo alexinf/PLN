@@ -13,8 +13,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { ComentariosComponent } from './components/comentarios/comentarios.component';
+import {SelectModule} from 'ng2-select';
 
 @NgModule({
+  
   declarations: [
     AppComponent,
     CategoriaComponent,

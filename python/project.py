@@ -4,10 +4,11 @@ import flask
 from flask import request, jsonify
 import mysql.connector
 import time
+from flask_cors import CORS
 
 try:
     conexion_db = mysql.connector.connect(
-        host="localhost", user="alex", passwd="Hola1234.", database="ia2proyectos")
+        host="localhost", user="root", passwd="example", database="ia2proyectos")
     print("--- Conexión a DB exitosa ---")
 except:
     print("Error en la Conexión a la DB")
@@ -61,6 +62,8 @@ def obtener_resumenCalif(proyectoid):
 
 
 app = flask.Flask(__name__)
+cors = CORS(app, resources=r'/api/*')
+
 app.config["DEBUG"] = True
 
 

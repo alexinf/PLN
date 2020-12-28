@@ -2,15 +2,20 @@
 <div class="row">
     <div class="card col-3">
         <div class="card-body">
-            <!-- <form [formGroup] = "comentariosForm" (ngSubmit)="agregarComentario()">
+            <form [formGroup] = "formGroup">
+                <select class="custom-select" (change)="changeProy($event)" formControlName="proyectoid">
+                    <option value="" disabled>Escoge el id del proyecto</option>
+                    <option *ngFor="let proy of proyectos" [ngValue]="proy">{{proy}}</option>
+                 </select>
+
                 <div class="form-group">
                     <label for="comentario">Comentario</label>
-                    <input type="text" class="form-control" id="comentario" formControlName="comentario">
+                    <input type="text" class="form-control" name="comentario" formControlName="comentario">
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-success" [disabled]="!comentariosForm.valid">Enviar</button>
+                    <button class="btn btn-success"  (click)="agregarComentario()" >Enviar</button>
                 </div>
-            </form> -->
+            </form>
         </div>
     </div>
 
@@ -18,17 +23,7 @@
     <div class="col-9">
         <div ng-app="myApp" ng-controller="myCtrl">
 
-            <select ng-model="selectedName" ng-options="x for x in names">
-            </select>
-            
-            </div>
-            
-            <script>
-            var app = angular.module('myApp', []);
-            app.controller('myCtrl', function($scope) {
-              $scope.names = ["Emil", "Tobias", "Linus"];
-            });
-            </script>
-        <img class="card-img-top" src="assets/img/1.jpg" alt="Card image cap">
+         <img class="card-img-top" id="imgProyect" src="assets/img/1.jpg" alt="Card image cap">
+        
+        </div>
     </div>
-</div>
