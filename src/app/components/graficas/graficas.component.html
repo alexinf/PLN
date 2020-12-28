@@ -1,11 +1,29 @@
-<div style="display: block;">
-  <canvas baseChart width="400" height="400"
-    [datasets]="lineChartData"
-    [labels]="lineChartLabels"
-    [options]="lineChartOptions"
-    [colors]="lineChartColors"
-    [legend]="lineChartLegend"
-    [chartType]="lineChartType"
-    [plugins]="lineChartPlugins">
-  </canvas>
+
+<div class="row ">
+  <div class="col-1"></div>
+    <div class="card col-2">
+      <div class="card-body">
+          <form [formGroup] = "formGroup">
+              <select class="custom-select" (change)="changeProy($event)" formControlName="proyectoid">
+                  <option value="" disabled>Escoge el id del proyecto</option>
+                  <option *ngFor="let proy of proyectos" [ngValue]="proy">{{proy}}</option>
+               </select>
+          </form>
+      </div>
+    
+  </div>
+  <div class="col col-md-8">
+    <div style="display: block;">
+      <canvas baseChart width="400" height="400"
+        [datasets]="lineChartData"
+        [labels]="lineChartLabels"
+        [options]="lineChartOptions"
+        [colors]="lineChartColors"
+        [legend]="lineChartLegend"
+        [chartType]="lineChartType"
+        [plugins]="lineChartPlugins">
+      </canvas>
+    </div>    
+  </div>
+  <div class="col-1"></div>
 </div>

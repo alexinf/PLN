@@ -1,6 +1,7 @@
 <!-- Creación del formulario -->
 <div class="row">
-    <div class="card col-3">
+    <div class="col-1"></div>
+    <div class="card col-2">
         <div class="card-body">
             <form [formGroup] = "formGroup">
                 <select class="custom-select" (change)="changeProy($event)" formControlName="proyectoid">
@@ -17,13 +18,16 @@
                 </div>
             </form>
         </div>
+    
     </div>
 
     <!-- fotos proyectos -->
-    <div class="col-9">
+    <div class="col-8">
         <div ng-app="myApp" ng-controller="myCtrl">
 
-         <img class="card-img-top" id="imgProyect" src="assets/img/1.jpg" alt="Card image cap">
+         <img class="card-img-top" id="imgProyect" src="assets/img/0.jpg" alt="Card image cap">
         
         </div>
     </div>
+    <div class="col-1"></div>
+</div>

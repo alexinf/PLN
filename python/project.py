@@ -42,11 +42,13 @@ def insertar_calificacion(comentario, proyectoid):
 
 
 def obtener_resumenCalif(proyectoid):
-    consulta = "SELECT positivo, negativo, neutral, fecha FROM estado WHERE proyectos_id=1"  # + \
+    
+    consulta = "SELECT positivo, negativo, neutral, fecha FROM estado WHERE proyectos_id="+str(proyectoid)  # + \
+    print(consulta)
     cursor = conexion_db.cursor(buffered=True)
     cursor.execute(consulta)
     resultados = cursor.fetchall()
-
+    print(resultados)
     consultaNombre = "SELECT nombre FROM proyectos WHERE proyectos_id={}".format(
         proyectoid)
     cursor.execute(consultaNombre)
