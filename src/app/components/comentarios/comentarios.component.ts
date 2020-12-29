@@ -30,7 +30,15 @@ export class ComentariosComponent implements OnInit {
     const formulario = this.formGroup.value;
     console.log(formulario);
     this.comentariosService.createComentario(formulario)
-      .subscribe(data => console.log(data), error => console.log(error))
+      .subscribe(data => {
+         console.log(data)
+         document.getElementById('correcto').innerHTML = "Se envio correctamente"
+         document.getElementById('correcto').style.color = "green"
+      },error => {
+        console.log(error)
+        document.getElementById('correcto').innerHTML = "No se envio - Error"
+        document.getElementById('correcto').style.color = "red"
+      })
   }
 
   changeProy(e){
