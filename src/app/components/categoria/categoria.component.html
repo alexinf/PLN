@@ -4,15 +4,16 @@
     </div>
     <div class="col-10">
         <table class="table">
-            <thead class="thead-dark text-center">
+            <thead class="thead-dark text-center" (change)="mostrarRequerimientos()" >
                 <tr>
-                    <th scope="col">Palabra</th>
-                    <th scope="col">Numero Veces</th>
-                    <th scope="col">Proyecto</th>
-                    <th scope="col">Procentaje</th>
+                    <th scope="col">Pedido</th>
+                    <th scope="col">Localidad</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Total</th>
                 </tr>
             </thead>
             <tbody>
+
                 <!-- <tr *ngFor="let categoria of categorias">
                     <td>{{categoria.NOMBRE_CATE}}</td>
                     <td>{{categoria.DATOS_CATE}}</td>

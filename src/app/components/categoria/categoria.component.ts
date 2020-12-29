@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ComentariosService } from './../../service/comentarios.service'
 
 @Component({
   selector: 'app-categoria',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoriaComponent implements OnInit {
 
-  constructor() { }
-
   ngOnInit(): void {
   }
-
+  public requerimientos = [];
+  constructor(private comentariosService: ComentariosService) {
+    
+  }
+  mostrarRequerimientos(){
+    
+    this.comentariosService.mostrarRequerimiento()
+    .subscribe(dataBack => {
+      this.requerimientos = dataBack
+      console.log(this.requerimientos)
+    }, error => console.log(error))
+  }
 }

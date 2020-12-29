@@ -13,6 +13,29 @@ try:
 except:
     print("Error en la Conexión a la DB")
 
+listaObras = {"asphalted": "asfaltado",
+              "asphalt": "asfaltado",
+              "lighting": "alumbrado",
+              "paved": "empedrado",
+              "hospital": "hospital",
+              "post": "posta",
+              "potholes": "baches",
+              "bridge": "puente",
+              "school": "colegio",
+              "Park": "parque",
+              "sewerage": "alcantarillado",
+              "Water": "agua",
+              "distributor": "distribuidor",
+              "traffic light": "semaforo",
+              "court": "cancha",
+              "soccer": "futbol",
+              "highway": "carretera",
+              "avenue": "avenida",
+              "terminal": "terminal",
+              "train": "tren",
+              "irrigation": "riego"
+              }
+
 
 def analizador(texto):
     analisisDeTexto = TextBlob(texto)
@@ -61,7 +84,44 @@ def obtener_resumenCalif(proyectoid):
 
     cursor.close()
     return jsonificado
+    
+def clasificarPedido(pedido, localidad):
+    pedidoBlob = TextBlob(pedido)
+    pedidoTraducido = pedidoBlob.translate(to='en')
+    print(pedidoTraducido)
+    clasificacionNouns = (sustantivo for sustantivo,
+                          tag in pedidoTraducido.tags if tag == 'NN')
+    listaNouns = []
+    for item in clasificacionNouns:
+        listaNouns.append(item)
 
+    for item in listaNouns:
+        if(listaObras.get(item) != None):
+            anadirPedido(item, localidad)
+
+
+def anadirPedido(pedido, localidad):
+    consulta = "INSERT INTO pedidos (pedido, localidad, fecha) VALUES (%s, %s, %s)"
+    cursor = conexion_db.cursor(buffered=True)
+    pedido = listaObras.get(pedido)
+    fecha = time.strftime('%Y-%m-%d %H:%M:%S')
+    datos = (pedido, localidad, fecha)
+    cursor.execute(consulta, datos)
+    conexion_db.commit()
+    cursor.close()
+
+
+def getPedido():
+    cursor = conexion_db.cursor(buffered=True)
+    consultaPedidos = "SELECT pedido,localidad,fecha, COUNT(pedido) AS total FROM pedidos GROUP BY Month(fecha), pedido"
+    cursor.execute(consultaPedidos)
+    resultados = cursor.fetchall()
+    respuesta = {"pedidos": []}
+    for dato in resultados:
+        respuesta['pedidos'].append({"pedido": dato[0], "localidad": dato[1], "mes": int(
+            dato[2].strftime('%m')), "total": dato[3]})
+
+    return respuesta
 
 app = flask.Flask(__name__)
 cors = CORS(app, resources=r'/api/*')
@@ -91,5 +151,22 @@ def api_calResumen():
 
     return jsonify(resultados)
 
+@ app.route('/api/pedidos', methods=['POST'])
+def api_pedidos():
+    if 'pedido' in request.get_json():
+        pedido = request.get_json()['pedido']
+        localidad = request.get_json()['localidad']
+        clasificarPedido(pedido, localidad)
+    else:
+        return "Error: parámetro 'pedido' no provisto. Por favor especifica un pedido de obra."
+
+    return jsonify('Realizado Exitosamente')
+
+
+@ app.route('/api/pedidos/resumen', methods=['GET'])
+def api_getPedidos():
+    respuesta = getPedido()
+
+    return jsonify(respuesta)
 
 app.run()

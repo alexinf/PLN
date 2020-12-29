@@ -18,4 +18,8 @@ export class ComentariosService {
   mostrarGrafica(data): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/calificacion/resumen`, data);
   }
+  mostrarRequerimiento(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/api/pedidos/resumen`);
+  }
+
 }
